@@ -22,55 +22,54 @@ export default function RegisterScreen() {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleRegister = async () => {
-  if (!name || !email || !password || !confirmPassword) {
-    Alert.alert("Error", "All fields are required");
-    return;
-  }
-
-  if (password !== confirmPassword) {
-    Alert.alert("Error", "Passwords do not match");
-    return;
-  }
-
-  if (role === "student" && !studentId) {
-    Alert.alert("Error", "Student ID is required");
-    return;
-  }
-
-  setIsLoading(true);
-
-  try {
-    const response = await fetch("http://127.0.0.1:8000/api/register/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name,
-        email,
-        password,
-        confirmPassword,
-        role,
-        studentId,
-      }),
-    });
-
-    const data = await response.json();
-
-    if (response.ok) {
-      Alert.alert("Success", data.message);
-      router.push("/"); // or navigation.navigate('Login')
-    } else {
-      Alert.alert("Error", data.error || "Registration failed");
+    if (!name || !email || !password || !confirmPassword) {
+      Alert.alert("Error", "All fields are required");
+      return;
     }
-  } catch (err) {
-    console.error(err);
-    Alert.alert("Error", "Something went wrong");
-  } finally {
-    setIsLoading(false);
-  }
-};
 
+    if (password !== confirmPassword) {
+      Alert.alert("Error", "Passwords do not match");
+      return;
+    }
+
+    if (role === "student" && !studentId) {
+      Alert.alert("Error", "Student ID is required");
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      const response = await fetch("http://192.168.18.188:8000/api/register/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          password,
+          confirmPassword,
+          role,
+          studentId,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        Alert.alert("Success", data.message);
+        router.push("/");
+      } else {
+        Alert.alert("Error", data.error || "Registration failed");
+      }
+    } catch (err) {
+      console.error(err);
+      Alert.alert("Error", "Something went wrong");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <View style={styles.container}>

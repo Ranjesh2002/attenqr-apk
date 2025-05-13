@@ -1,4 +1,5 @@
-import { useRouter } from "expo-router"; // Equivalent to useNavigate in React Router
+import axios from "axios";
+import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import {
   ActivityIndicator,
@@ -16,16 +17,37 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
+  const BASE_URL = "http://192.168.18.188:8000/api";
+
   const handleLogin = async () => {
+    if (!email || !password) {
+      alert("Please fill in both email and password");
+      return;
+    }
+
     setIsLoading(true);
-    setTimeout(() => {
-      if (role === "teacher") {
-        router.push("/teacher/dashboard");
-      } else {
-        router.push("/student/dashboard");
+
+    try {
+      const response = await axios.post(`${BASE_URL}/login/`, {
+        email,
+        password,
+      });
+
+      if (response.status === 200) {
+        alert("Login successful");
+
+        if (role === "teacher") {
+          router.push("/teacher/dashboard");
+        } else {
+          router.push("/student/dashboard");
+        }
       }
+    } catch (error) {
+      console.log("Login error:", error?.response?.data || error.message);
+      alert("Invalid email or password");
+    } finally {
       setIsLoading(false);
-    }, 1000);
+    }
   };
 
   return (
