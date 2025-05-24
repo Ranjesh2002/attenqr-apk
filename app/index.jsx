@@ -17,7 +17,7 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const BASE_URL = "http://192.168.18.188:8000/api";
+  const BASE_URL = "http://127.0.0.1:8000/api";
 
   const handleLogin = async () => {
     if (!email || !password) {
@@ -39,7 +39,7 @@ export default function LoginPage() {
         if (role === "teacher") {
           router.push("/teacher/dashboard");
         } else {
-          router.push("/student/dashboard");
+          router.push("/student");
         }
       }
     } catch (error) {
