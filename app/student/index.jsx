@@ -1,5 +1,6 @@
 import { colors, fontSizes, shadows, spacing } from "@/constants/theme";
 import { Ionicons } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CameraView, useCameraPermissions } from "expo-camera";
 import { LinearGradient } from "expo-linear-gradient";
 import { StatusBar } from "expo-status-bar";
@@ -24,12 +25,24 @@ import Animated, {
 export default function StudentHomeScreen() {
   const [scanning, setScanning] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [username, setUsername] = useState("Student");
   const [permission, requestPermission] = useCameraPermissions();
   const pulseAnim = useSharedValue(1);
 
   useEffect(() => {
-    // Start the pulsing animation
     pulseAnim.value = withRepeat(withTiming(1.2, { duration: 2000 }), -1, true);
+  }, []);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      const userString = await AsyncStorage.getItem("user");
+      if (userString) {
+        const user = JSON.parse(userString);
+        setUsername(user.first_name);
+      }
+    };
+
+    fetchUserData();
   }, []);
 
   const animatedStyle = useAnimatedStyle(() => {
@@ -53,12 +66,10 @@ export default function StudentHomeScreen() {
 
     setScanning(true);
 
-    // Simulate a successful scan after 3 seconds
     setTimeout(() => {
       setScanning(false);
       setSuccess(true);
 
-      // Reset success state after 2 seconds
       setTimeout(() => {
         setSuccess(false);
       }, 2000);
@@ -70,7 +81,7 @@ export default function StudentHomeScreen() {
       <StatusBar style="dark" />
 
       <View style={styles.header}>
-        <Text style={styles.greeting}>Hello, Student</Text>
+        <Text style={styles.greeting}>Hello, {username}</Text>
         <Text style={styles.subtitle}>
           Mark your attendance by scanning a QR code
         </Text>

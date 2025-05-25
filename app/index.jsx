@@ -1,3 +1,4 @@
+import AsyncStorage from "@react-native-async-storage/async-storage"; // if not already
 import axios from "axios";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
@@ -34,6 +35,10 @@ export default function LoginPage() {
       });
 
       if (response.status === 200) {
+        const userData = response.data.user;
+
+        // ✅ Save to AsyncStorage
+        await AsyncStorage.setItem("user", JSON.stringify(userData));
         alert("Login successful");
 
         if (role === "teacher") {
