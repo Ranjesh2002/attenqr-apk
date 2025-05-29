@@ -89,7 +89,7 @@ export default function StudentHomeScreen() {
 
       <View style={styles.mainContent}>
         {scanning ? (
-          <View style={styles.scannerContainer}>
+          <View style={styles.scanner}>
             <CameraView style={styles.camera} facing="back">
               <View style={styles.overlay}>
                 <View style={styles.scanFrame} />
@@ -97,14 +97,14 @@ export default function StudentHomeScreen() {
               </View>
             </CameraView>
             <TouchableOpacity
-              style={styles.cancelButton}
+              style={styles.cancelBtn}
               onPress={() => setScanning(false)}
             >
-              <Text style={styles.cancelButtonText}>Cancel</Text>
+              <Text style={styles.cancelBtnText}>Cancel</Text>
             </TouchableOpacity>
           </View>
         ) : (
-          <View style={styles.buttonContainer}>
+          <View style={styles.btnContainer}>
             {success ? (
               <Animated.View
                 entering={FadeIn.duration(300)}
@@ -123,7 +123,7 @@ export default function StudentHomeScreen() {
                 <Animated.View style={[styles.pulseCircle, animatedStyle]} />
                 <LinearGradient
                   colors={[colors.primary, colors.primaryDark]}
-                  style={styles.gradientButton}
+                  style={styles.gradientBtn}
                 >
                   <TouchableOpacity
                     style={styles.scanButton}
@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: spacing.lg,
   },
-  buttonContainer: {
+  btnContainer: {
     justifyContent: "center",
     alignItems: "center",
   },
@@ -186,7 +186,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primary,
     opacity: 0.3,
   },
-  gradientButton: {
+  gradientBtn: {
     width: 170,
     height: 170,
     borderRadius: 85,
@@ -207,7 +207,7 @@ const styles = StyleSheet.create({
     fontFamily: "Inter-Bold",
     color: colors.white,
   },
-  scannerContainer: {
+  scanner: {
     width: "100%",
     height: 400,
     overflow: "hidden",
@@ -237,7 +237,7 @@ const styles = StyleSheet.create({
     fontFamily: "Inter-Medium",
     color: colors.white,
   },
-  cancelButton: {
+  cancelBtn: {
     position: "absolute",
     bottom: 20,
     alignSelf: "center",
@@ -246,7 +246,7 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0,0,0,0.6)",
     borderRadius: 20,
   },
-  cancelButtonText: {
+  cancelBtnText: {
     fontSize: fontSizes.md,
     fontFamily: "Inter-Medium",
     color: colors.white,

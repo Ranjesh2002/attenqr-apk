@@ -17,7 +17,6 @@ import {
 } from "react-native";
 import Animated, { FadeInRight } from "react-native-reanimated";
 
-// Mock data for attendance history
 const MOCK_ATTENDANCE = [
   {
     id: "1",

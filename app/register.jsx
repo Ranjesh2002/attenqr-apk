@@ -91,7 +91,7 @@ export default function RegisterScreen() {
       />
 
       <Text style={styles.label}>Account Type</Text>
-      <View style={styles.radioGroup}>
+      <View style={styles.radioGrp}>
         <View style={styles.radioItem}>
           <RadioButton
             value="student"
@@ -143,12 +143,12 @@ export default function RegisterScreen() {
         {isLoading ? (
           <ActivityIndicator color="#fff" />
         ) : (
-          <Text style={styles.buttonText}>Create Account</Text>
+          <Text style={styles.btnText}>Create Account</Text>
         )}
       </TouchableOpacity>
 
       <TouchableOpacity onPress={() => router.push("/")}>
-        <Text style={styles.loginLink}>Already have an account? Sign in</Text>
+        <Text style={styles.loginlink}>Already have an account? Sign in</Text>
       </TouchableOpacity>
     </View>
   );
@@ -178,7 +178,7 @@ const styles = StyleSheet.create({
     padding: 12,
     marginBottom: 12,
   },
-  radioGroup: {
+  radioGrp: {
     flexDirection: "row",
     alignItems: "center",
     marginBottom: 12,
@@ -194,12 +194,12 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     marginTop: 12,
   },
-  buttonText: {
+  btnText: {
     color: "#fff",
     fontSize: 16,
     textAlign: "center",
   },
-  loginLink: {
+  loginlink: {
     color: "#007bff",
     marginTop: 16,
     textAlign: "center",

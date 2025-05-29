@@ -1,4 +1,4 @@
-import AsyncStorage from "@react-native-async-storage/async-storage"; // if not already
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
@@ -37,12 +37,11 @@ export default function LoginPage() {
       if (response.status === 200) {
         const userData = response.data.user;
 
-        // ✅ Save to AsyncStorage
         await AsyncStorage.setItem("user", JSON.stringify(userData));
         alert("Login successful");
 
         if (role === "teacher") {
-          router.push("/teacher/dashboard");
+          router.push("/teacher");
         } else {
           router.push("/student");
         }
@@ -63,24 +62,24 @@ export default function LoginPage() {
           Enter your credentials to access your account
         </Text>
 
-        <View style={styles.roleButtons}>
+        <View style={styles.roleBtn}>
           <TouchableOpacity
             style={[
-              styles.roleButton,
+              styles.rolebtn,
               role === "student" ? styles.active : styles.inactive,
             ]}
             onPress={() => setRole("student")}
           >
-            <Text style={styles.roleText}>Student</Text>
+            <Text style={styles.roleT}>Student</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={[
-              styles.roleButton,
+              styles.rolebtn,
               role === "teacher" ? styles.active : styles.inactive,
             ]}
             onPress={() => setRole("teacher")}
           >
-            <Text style={styles.roleText}>Teacher</Text>
+            <Text style={styles.roleT}>Teacher</Text>
           </TouchableOpacity>
         </View>
 
@@ -102,23 +101,20 @@ export default function LoginPage() {
         />
 
         <TouchableOpacity
-          style={styles.submitButton}
+          style={styles.submitBtn}
           onPress={handleLogin}
           disabled={isLoading}
         >
           {isLoading ? (
             <ActivityIndicator color="#fff" />
           ) : (
-            <Text style={styles.buttonText}>Sign in as {role}</Text>
+            <Text style={styles.btnText}>Sign in as {role}</Text>
           )}
         </TouchableOpacity>
 
-        <Text style={styles.footerText}>
+        <Text style={styles.fText}>
           Don't have an account?{" "}
-          <Text
-            style={styles.linkText}
-            onPress={() => router.push("/register")}
-          >
+          <Text style={styles.lText} onPress={() => router.push("/register")}>
             Register
           </Text>
         </Text>
@@ -156,13 +152,13 @@ const styles = StyleSheet.create({
     color: "#6c757d",
     marginBottom: 16,
   },
-  roleButtons: {
+  roleBtn: {
     flexDirection: "row",
     marginBottom: 16,
     gap: 10,
     justifyContent: "space-between",
   },
-  roleButton: {
+  rolebtn: {
     flex: 1,
     paddingVertical: 10,
     borderRadius: 6,
@@ -176,7 +172,7 @@ const styles = StyleSheet.create({
     borderColor: "#007bff",
     backgroundColor: "#fff",
   },
-  roleText: {
+  roleT: {
     color: "#000",
     fontWeight: "bold",
   },
@@ -188,7 +184,7 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     backgroundColor: "#fff",
   },
-  submitButton: {
+  submitBtn: {
     backgroundColor: "#007bff",
     paddingVertical: 12,
     borderRadius: 6,
@@ -196,16 +192,16 @@ const styles = StyleSheet.create({
     marginTop: 8,
     marginBottom: 12,
   },
-  buttonText: {
+  btnText: {
     color: "#fff",
     fontWeight: "bold",
   },
-  footerText: {
+  fText: {
     textAlign: "center",
     fontSize: 12,
     color: "#6c757d",
   },
-  linkText: {
+  lText: {
     color: "#007bff",
     textDecorationLine: "underline",
   },

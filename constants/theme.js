@@ -1,17 +1,17 @@
 export const colors = {
-  primary: '#4A90E2',
-  primaryLight: '#6BA5E7',
-  primaryDark: '#3A7BC8',
-  white: '#FFFFFF',
-  lightGray: '#F5F7FA',
-  gray: '#E1E4E8',
-  darkGray: '#6C757D',
-  textDark: '#2D3748',
-  textLight: '#718096',
-  success: '#48BB78',
-  warning: '#ECC94B',
-  error: '#F56565',
-  background: '#F8FAFC',
+  primary: "#4A90E2",
+  primaryLight: "#6BA5E7",
+  primaryDark: "#3A7BC8",
+  white: "#FFFFFF",
+  lightGray: "#F5F7FA",
+  gray: "#E1E4E8",
+  darkGray: "#6C757D",
+  textDark: "#2D3748",
+  textLight: "#718096",
+  success: "#48BB78",
+  warning: "#ECC94B",
+  error: "#F56565",
+  background: "#F8FAFC",
 };
 
 export const spacing = {
@@ -34,9 +34,9 @@ export const fontSizes = {
 };
 
 export const fontWeights = {
-  regular: '400',
-  medium: '500',
-  bold: '700',
+  regular: "400",
+  medium: "500",
+  bold: "700",
 };
 
 export const borderRadius = {
@@ -49,21 +49,21 @@ export const borderRadius = {
 
 export const shadows = {
   sm: {
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.18,
     shadowRadius: 1.0,
     elevation: 1,
   },
   md: {
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.23,
     shadowRadius: 2.62,
     elevation: 4,
   },
   lg: {
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 4.65,
