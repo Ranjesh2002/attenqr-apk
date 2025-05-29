@@ -31,9 +31,7 @@ export default function ProfileScreen() {
       <View style={styles.header}>
         <View style={styles.profileImageContainer}>
           <Image
-            source={{
-              uri: "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=300",
-            }}
+            source={require("../../assets/images/profile.png")}
             style={styles.profileImage}
           />
           <TouchableOpacity style={styles.editButton}>
@@ -51,17 +49,17 @@ export default function ProfileScreen() {
       >
         <View style={styles.infoRow}>
           <Text style={styles.infoLabel}>Email</Text>
-          <Text style={styles.infoValue}>john.doe@university.edu</Text>
+          <Text style={styles.infoValue}>ranjesh.thakur@mail.com</Text>
         </View>
 
         <View style={styles.infoRow}>
           <Text style={styles.infoLabel}>Department</Text>
-          <Text style={styles.infoValue}>Computer Science</Text>
+          <Text style={styles.infoValue}>BScCIT</Text>
         </View>
 
         <View style={styles.infoRow}>
           <Text style={styles.infoLabel}>Year</Text>
-          <Text style={styles.infoValue}>4th Year</Text>
+          <Text style={styles.infoValue}>3th Year</Text>
         </View>
       </Animated.View>
 
@@ -115,10 +113,6 @@ export default function ProfileScreen() {
           <Text style={styles.logoutText}>Logout</Text>
         </TouchableOpacity>
       </Animated.View>
-
-      <View style={styles.versionContainer}>
-        <Text style={styles.versionText}>Version 1.0.0</Text>
-      </View>
     </ScrollView>
   );
 }

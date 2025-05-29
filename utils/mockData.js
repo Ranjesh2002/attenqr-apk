@@ -20,6 +20,15 @@ export const mockNotifications = [
     timestamp: "2023-04-10T10:00:00Z",
     type: "warning",
   },
+  {
+    id: "2",
+    userId: "1",
+    title: "Attendance Recorded",
+    message: "Your attendance for CS201 has been recorded.",
+    read: true,
+    timestamp: "2023-04-08T11:05:00Z",
+    type: "success",
+  },
 ];
 
 export const calculateAttendanceStats = (studentId, courseId) => {
