@@ -15,7 +15,6 @@ import {
 
 export default function ProfileScreen() {
   const handleLogout = () => {
-    // Navigate to login screen
     router.replace("/");
   };
 
