@@ -1,17 +1,16 @@
-import { Button } from "@/components/ui/button"; // Assuming you have Button component defined
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"; // Assuming you have Card components defined
+} from "@/components/ui/card";
 import { useNavigation } from "@react-navigation/native";
-import { History } from "lucide-react"; // Assuming you have Lucide icons set up
+import { History } from "lucide-react";
 import React from "react";
 import { ScrollView, Text, View } from "react-native";
 
-// Mock data for recent sessions
 const mockClassesData = {
   recentSessions: [
     {
