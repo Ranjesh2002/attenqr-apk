@@ -49,8 +49,8 @@ export default function TeacherHomeScreen() {
 
       <View style={styles.card}>
         <Text style={styles.cardTitle}>📚 Today: Database Systems</Text>
-        <Text style={styles.cardText}>🕙 Time: 10:00 AM – Room 202</Text>
-        <Text style={styles.cardText}>👥 Students: 35</Text>
+        <Text style={styles.cardText}>🕙 Time: 07:00 - 09:00 AM</Text>
+        <Text style={styles.cardText}>👥 Students: 23</Text>
 
         <TouchableOpacity
           style={styles.qrButton}

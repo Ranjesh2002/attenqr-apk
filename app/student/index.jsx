@@ -3,7 +3,6 @@ import { Ionicons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CameraView, useCameraPermissions } from "expo-camera";
 import { LinearGradient } from "expo-linear-gradient";
-import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useState } from "react";
 import {
   Alert,
@@ -25,7 +24,7 @@ import Animated, {
 export default function StudentHomeScreen() {
   const [scanning, setScanning] = useState(false);
   const [success, setSuccess] = useState(false);
-  const [username, setUsername] = useState("Student");
+  const [username, setUsername] = useState("");
   const [permission, requestPermission] = useCameraPermissions();
   const pulseAnim = useSharedValue(1);
 
@@ -78,8 +77,6 @@ export default function StudentHomeScreen() {
 
   return (
     <View style={styles.container}>
-      <StatusBar style="dark" />
-
       <View style={styles.header}>
         <Text style={styles.greeting}>Hello, {username}</Text>
         <Text style={styles.subtitle}>
