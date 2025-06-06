@@ -6,7 +6,7 @@ import QRCode from "react-native-qrcode-svg";
 
 export default function GenerateQRScreen() {
   const [sessionId, setSessionId] = useState("");
-  const [expiryTime, setExpiryTime] = useState(300); // 5 minutes
+  const [expiryTime, setExpiryTime] = useState(300); 
   const [isGenerating, setIsGenerating] = useState(true);
   const navigation = useNavigation();
 
