@@ -1,6 +1,7 @@
 import { colors, fontSizes, shadows, spacing } from "@/constants/theme";
 import { Ionicons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
 import { CameraView, useCameraPermissions } from "expo-camera";
 import { LinearGradient } from "expo-linear-gradient";
 import React, { useEffect, useState } from "react";
@@ -25,6 +26,7 @@ export default function StudentHomeScreen() {
   const [scanning, setScanning] = useState(false);
   const [success, setSuccess] = useState(false);
   const [username, setUsername] = useState("");
+  const [hasScanned, setHasScanned] = useState(false);
   const [permission, requestPermission] = useCameraPermissions();
   const pulseAnim = useSharedValue(1);
 
@@ -75,6 +77,32 @@ export default function StudentHomeScreen() {
     }, 3000);
   };
 
+  const handleQr = async ({ data }) => {
+    if (hasScanned) return;
+    setHasScanned(true);
+    setScanning(false);
+
+    try {
+      const response = await axios.post(
+        "http://127.0.0.1:8000/api/mark-attendance/",
+        { session_id: data },
+        { withCredentials: true }
+      );
+
+      if (response.status === 200) {
+        setSuccess(true);
+        setTimeout(() => {
+          setSuccess(false);
+          setHasScanned(false);
+        }, 2000);
+      }
+    } catch (error) {
+      console.error("Attendance error", error?.response?.data || error.message);
+      Alert.alert("error", "failed to mark attendance");
+      setHasScanned(false);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -87,7 +115,14 @@ export default function StudentHomeScreen() {
       <View style={styles.mainContent}>
         {scanning ? (
           <View style={styles.scanner}>
-            <CameraView style={styles.camera} facing="back">
+            <CameraView
+              style={styles.camera}
+              facing="back"
+              barcodeScannerSettings={{
+                barcodeTypes: ["qr"],
+              }}
+              onBarcodeScanned={handleQr}
+            >
               <View style={styles.overlay}>
                 <View style={styles.scanFrame} />
                 <Text style={styles.scanText}>Scanning for QR Code...</Text>

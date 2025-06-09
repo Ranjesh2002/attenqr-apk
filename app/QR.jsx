@@ -1,23 +1,35 @@
 import { colors, fontSizes, spacing } from "@/constants/theme";
 import { useNavigation } from "@react-navigation/native";
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Alert, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import QRCode from "react-native-qrcode-svg";
 
 export default function GenerateQRScreen() {
   const [sessionId, setSessionId] = useState("");
-  const [expiryTime, setExpiryTime] = useState(300); 
+  const [expiryTime, setExpiryTime] = useState(300);
   const [isGenerating, setIsGenerating] = useState(true);
   const navigation = useNavigation();
 
-  const generateQR = () => {
+  const generateQR = async () => {
     setIsGenerating(true);
-    const newSessionId = `SESSION-${Date.now()}-${Math.floor(
-      Math.random() * 10000
-    )}`;
-    setSessionId(newSessionId);
-    setExpiryTime(300);
-    setIsGenerating(false);
+    try {
+      const response = await axios.post(
+        "http://127.0.0.1:8000/generate-qr/",
+        {},
+        { withCredentials: true }
+      );
+      const backendsessId = response.data.session_id;
+      setSessionId(backendsessId);
+    } catch (error) {
+      console.error(
+        "failed to generate QR",
+        error.response?.data || error.message
+      );
+      Alert.alert("error", "could not geneate QR");
+    } finally {
+      setIsGenerating(false);
+    }
   };
 
   useEffect(() => {
