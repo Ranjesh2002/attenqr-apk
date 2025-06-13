@@ -10,8 +10,9 @@ import {
   View,
 } from "react-native";
 import { RadioButton } from "react-native-paper";
+import api from "../utils/api";
 
-export default function RegisterScreen() {
+export default function Register() {
   const router = useRouter();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -40,29 +41,17 @@ export default function RegisterScreen() {
     setIsLoading(true);
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/register/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name,
-          email,
-          password,
-          confirmPassword,
-          role,
-          studentId,
-        }),
+      const response = await api.post("/register/", {
+        name,
+        email,
+        password,
+        confirmPassword,
+        role,
+        studentId,
       });
 
-      const data = await response.json();
-
-      if (response.ok) {
-        Alert.alert("Success", data.message);
-        router.push("/");
-      } else {
-        Alert.alert("Error", data.error || "Registration failed");
-      }
+      Alert.alert("success", response.data.message);
+      router.push("/");
     } catch (err) {
       console.error(err);
       Alert.alert("Error", "Something went wrong");

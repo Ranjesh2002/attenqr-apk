@@ -1,6 +1,5 @@
 import Colors from "@/constants/Colors";
 import { shadows } from "@/constants/theme";
-import { router } from "expo-router";
 import { BookOpen, LogOut, Mail, Settings, User } from "lucide-react-native";
 import React from "react";
 import {
@@ -12,10 +11,11 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { logout } from "../../utils/auth";
 
 export default function ProfileScreen() {
   const handleLogout = () => {
-    router.replace("/");
+    logout();
   };
 
   return (

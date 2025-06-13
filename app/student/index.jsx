@@ -32,7 +32,7 @@ export default function StudentHomeScreen() {
 
   useEffect(() => {
     pulseAnim.value = withRepeat(withTiming(1.2, { duration: 2000 }), -1, true);
-  }, []);
+  });
 
   useEffect(() => {
     const fetchUserData = async () => {
