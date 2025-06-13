@@ -1,9 +1,10 @@
 import { colors, fontSizes, spacing } from "@/constants/theme";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Alert, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import QRCode from "react-native-qrcode-svg";
+import api from "../utils/api";
 
 export default function GenerateQRScreen() {
   const [sessionId, setSessionId] = useState("");
@@ -13,11 +14,18 @@ export default function GenerateQRScreen() {
 
   const generateQR = async () => {
     setIsGenerating(true);
+
+    const token = await AsyncStorage.getItem("accessToken");
     try {
-      const response = await axios.post(
-        "http://127.0.0.1:8000/generate-qr/",
+      const response = await api.post(
+        "generate-qr/",
         {},
-        { withCredentials: true }
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          withCredentials: true,
+        }
       );
       const backendsessId = response.data.session_id;
       setSessionId(backendsessId);
@@ -68,8 +76,15 @@ export default function GenerateQRScreen() {
       </Text>
 
       <View style={styles.qrContainer}>
-        {sessionId ? (
-          <QRCode value={sessionId} size={220} />
+        {sessionId &&
+        typeof sessionId === "string" &&
+        sessionId.trim() !== "" ? (
+          <QRCode
+            value={sessionId}
+            size={220}
+            color="black"
+            backgroundColor="white"
+          />
         ) : (
           <Text>Loading QR...</Text>
         )}
@@ -124,10 +139,12 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   qrContainer: {
+    marginVertical: spacing.lg,
     padding: spacing.lg,
-    backgroundColor: colors.white,
-    borderRadius: 16,
-    marginBottom: spacing.lg,
+    backgroundColor: "white", // QR codes need contrast
+    alignItems: "center",
+    justifyContent: "center",
+    minHeight: 250, // Ensure enough space
   },
   sessionInfo: {
     alignItems: "center",

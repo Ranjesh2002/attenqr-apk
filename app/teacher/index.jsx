@@ -16,6 +16,7 @@ import {
   withRepeat,
   withTiming,
 } from "react-native-reanimated";
+import { AuthGuard } from "../../components/AuthGaurd";
 
 export default function TeacherHomeScreen() {
   const router = useRouter();
@@ -24,7 +25,7 @@ export default function TeacherHomeScreen() {
 
   useEffect(() => {
     pulseAnim.value = withRepeat(withTiming(1.2, { duration: 2000 }), -1, true);
-  }, []);
+  });
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -39,27 +40,31 @@ export default function TeacherHomeScreen() {
   }, []);
 
   return (
-    <SafeAreaView style={styles.container}>
-      <StatusBar style="dark" />
+    <AuthGuard role="teacher">
+      <SafeAreaView style={styles.container}>
+        <StatusBar style="dark" />
 
-      <View style={styles.header}>
-        <Text style={styles.greeting}>Hello, {username} 👋</Text>
-        <Text style={styles.subtitle}>Generate QR Code to mark attendance</Text>
-      </View>
+        <View style={styles.header}>
+          <Text style={styles.greeting}>Hello, {username} 👋</Text>
+          <Text style={styles.subtitle}>
+            Generate QR Code to mark attendance
+          </Text>
+        </View>
 
-      <View style={styles.card}>
-        <Text style={styles.cardTitle}>📚 Today: Database Systems</Text>
-        <Text style={styles.cardText}>🕙 Time: 07:00 - 09:00 AM</Text>
-        <Text style={styles.cardText}>👥 Students: 23</Text>
+        <View style={styles.card}>
+          <Text style={styles.cardTitle}>📚 Today: Database Systems</Text>
+          <Text style={styles.cardText}>🕙 Time: 07:00 - 09:00 AM</Text>
+          <Text style={styles.cardText}>👥 Students: 23</Text>
 
-        <TouchableOpacity
-          style={styles.qrButton}
-          onPress={() => router.push("/QR")}
-        >
-          <Text style={styles.qrButtonText}>Generate QR Code</Text>
-        </TouchableOpacity>
-      </View>
-    </SafeAreaView>
+          <TouchableOpacity
+            style={styles.qrButton}
+            onPress={() => router.push("/QR")}
+          >
+            <Text style={styles.qrButtonText}>Generate QR Code</Text>
+          </TouchableOpacity>
+        </View>
+      </SafeAreaView>
+    </AuthGuard>
   );
 }
 

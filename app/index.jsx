@@ -1,5 +1,4 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import axios from "axios";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import {
@@ -10,15 +9,14 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import api from "../utils/api";
 
-export default function LoginPage() {
+export default function Login() {
   const router = useRouter();
   const [role, setRole] = useState("student");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-
-  const BASE_URL = "http://127.0.0.1:8000/api";
 
   const handleLogin = async () => {
     if (!email || !password) {
@@ -29,18 +27,22 @@ export default function LoginPage() {
     setIsLoading(true);
 
     try {
-      const response = await axios.post(`${BASE_URL}/login/`, {
-        email,
-        password,
+      const response = await api.post("/login/", {
+        email: email,
+        password: password,
       });
 
       if (response.status === 200) {
-        const userData = response.data.user;
+        const { user, tokens } = response.data;
+        await AsyncStorage.multiSet([
+          ["user", JSON.stringify(user)],
+          ["accessToken", tokens.access],
+          ["refreshToken", tokens.refresh],
+        ]);
 
-        await AsyncStorage.setItem("user", JSON.stringify(userData));
         alert("Login successful");
 
-        if (role === "teacher") {
+        if (user.role === "teacher") {
           router.push("/teacher");
         } else {
           router.push("/student");

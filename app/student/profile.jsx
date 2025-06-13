@@ -1,5 +1,4 @@
 import { colors, fontSizes, shadows, spacing } from "@/constants/theme";
-import { useRouter } from "expo-router";
 import {
   BookOpen,
   CalendarCheck,
@@ -18,12 +17,11 @@ import {
   View,
 } from "react-native";
 import Animated, { FadeInDown } from "react-native-reanimated";
+import { logout } from "../../utils/auth";
 
 export default function ProfileScreen() {
-  const router = useRouter();
-
   const handleLogout = () => {
-    router.replace("/");
+    logout();
   };
 
   return (
