@@ -1,4 +1,5 @@
 import { colors, fontSizes, shadows, spacing } from "@/constants/theme";
+import { MOCK_ATTENDANCE } from "@/utils/mockData";
 import { format } from "date-fns";
 import {
   Calendar,
@@ -16,69 +17,6 @@ import {
   View,
 } from "react-native";
 import Animated, { FadeInRight } from "react-native-reanimated";
-
-const MOCK_ATTENDANCE = [
-  {
-    id: "1",
-    date: new Date(2023, 11, 20),
-    status: "present",
-    subject: "Computer Networks",
-  },
-  {
-    id: "2",
-    date: new Date(2023, 11, 19),
-    status: "present",
-    subject: "Database Systems",
-  },
-  {
-    id: "3",
-    date: new Date(2023, 11, 18),
-    status: "absent",
-    subject: "Software Engineering",
-  },
-  {
-    id: "4",
-    date: new Date(2023, 11, 17),
-    status: "present",
-    subject: "AI Fundamentals",
-  },
-  {
-    id: "5",
-    date: new Date(2023, 11, 16),
-    status: "present",
-    subject: "Computer Networks",
-  },
-  {
-    id: "6",
-    date: new Date(2023, 11, 15),
-    status: "absent",
-    subject: "Database Systems",
-  },
-  {
-    id: "7",
-    date: new Date(2023, 11, 14),
-    status: "present",
-    subject: "Software Engineering",
-  },
-  {
-    id: "8",
-    date: new Date(2023, 11, 13),
-    status: "present",
-    subject: "AI Fundamentals",
-  },
-  {
-    id: "9",
-    date: new Date(2023, 11, 12),
-    status: "present",
-    subject: "Computer Networks",
-  },
-  {
-    id: "10",
-    date: new Date(2023, 11, 11),
-    status: "absent",
-    subject: "Database Systems",
-  },
-];
 
 export default function HistoryScreen() {
   const [filter, setFilter] = useState("all");

@@ -1,50 +1,6 @@
 import React from "react";
 import { FlatList, StyleSheet, Text, View } from "react-native";
-
-const attendanceData = [
-  {
-    id: "1",
-    name: "Ranjesh Thakur",
-    studentId: "23186532",
-    time: "07:15 AM",
-    status: "Present",
-  },
-  {
-    id: "2",
-    name: "Sumit Ray",
-    studentId: "23186542",
-    time: "07:10 AM",
-    status: "Present",
-  },
-  {
-    id: "3",
-    name: "Ratik Bajracharya",
-    studentId: "23186533",
-    time: "07:20 AM",
-    status: "Absent",
-  },
-  {
-    id: "4",
-    name: "Aadarsha Sunam",
-    studentId: "23186535",
-    time: "07:20 AM",
-    status: "Present",
-  },
-  {
-    id: "5",
-    name: "Niraj Chaudhary",
-    studentId: "23186543",
-    time: "07:05 AM",
-    status: "Absent",
-  },
-  {
-    id: "6",
-    name: "Bikal Maharjan",
-    studentId: "23186538",
-    time: "07:10 AM",
-    status: "Present",
-  },
-];
+import { attendanceData } from "../utils/mockData";
 
 export default function AttendanceRecord() {
   const renderItem = ({ item }) => (

@@ -18,7 +18,7 @@ export default function GenerateQRScreen() {
     const token = await AsyncStorage.getItem("accessToken");
     try {
       const response = await api.post(
-        "generate-qr/",
+        "/generate-qr/",
         {},
         {
           headers: {
@@ -27,7 +27,7 @@ export default function GenerateQRScreen() {
           withCredentials: true,
         }
       );
-      const backendsessId = response.data.session_id;
+      const backendsessId = String(response.data.code);
       setSessionId(backendsessId);
     } catch (error) {
       console.error(
