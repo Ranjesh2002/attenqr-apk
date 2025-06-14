@@ -31,6 +31,154 @@ export const mockNotifications = [
   },
 ];
 
+export const MOCK_ATTENDANCE = [
+  {
+    id: "1",
+    date: new Date(2023, 11, 20),
+    status: "present",
+    subject: "Computer Networks",
+  },
+  {
+    id: "2",
+    date: new Date(2023, 11, 19),
+    status: "present",
+    subject: "Database Systems",
+  },
+  {
+    id: "3",
+    date: new Date(2023, 11, 18),
+    status: "absent",
+    subject: "Software Engineering",
+  },
+  {
+    id: "4",
+    date: new Date(2023, 11, 17),
+    status: "present",
+    subject: "AI Fundamentals",
+  },
+  {
+    id: "5",
+    date: new Date(2023, 11, 16),
+    status: "present",
+    subject: "Computer Networks",
+  },
+  {
+    id: "6",
+    date: new Date(2023, 11, 15),
+    status: "absent",
+    subject: "Database Systems",
+  },
+  {
+    id: "7",
+    date: new Date(2023, 11, 14),
+    status: "present",
+    subject: "Software Engineering",
+  },
+  {
+    id: "8",
+    date: new Date(2023, 11, 13),
+    status: "present",
+    subject: "AI Fundamentals",
+  },
+  {
+    id: "9",
+    date: new Date(2023, 11, 12),
+    status: "present",
+    subject: "Computer Networks",
+  },
+  {
+    id: "10",
+    date: new Date(2023, 11, 11),
+    status: "absent",
+    subject: "Database Systems",
+  },
+];
+
+export const mockClassesData = {
+  recentSessions: [
+    {
+      id: 1,
+      course: "Server System",
+      date: "2025-06-01",
+      attendees: 20,
+      total: 23,
+    },
+    {
+      id: 2,
+      course: "Database",
+      date: "2025-06-02",
+      attendees: 21,
+      total: 23,
+    },
+    {
+      id: 3,
+      course: "It Infrastructure",
+      date: "2025-05-03",
+      attendees: 22,
+      total: 23,
+    },
+    {
+      id: 4,
+      course: "Server System",
+      date: "2025-05-7",
+      attendees: 19,
+      total: 23,
+    },
+    {
+      id: 5,
+      course: "Database",
+      date: "2025-05-8",
+      attendees: 23,
+      total: 23,
+    },
+  ],
+};
+
+export const attendanceData = [
+  {
+    id: "1",
+    name: "Ranjesh Thakur",
+    studentId: "23186532",
+    time: "07:15 AM",
+    status: "Present",
+  },
+  {
+    id: "2",
+    name: "Sumit Ray",
+    studentId: "23186542",
+    time: "07:10 AM",
+    status: "Present",
+  },
+  {
+    id: "3",
+    name: "Ratik Bajracharya",
+    studentId: "23186533",
+    time: "07:20 AM",
+    status: "Absent",
+  },
+  {
+    id: "4",
+    name: "Aadarsha Sunam",
+    studentId: "23186535",
+    time: "07:20 AM",
+    status: "Present",
+  },
+  {
+    id: "5",
+    name: "Niraj Chaudhary",
+    studentId: "23186543",
+    time: "07:05 AM",
+    status: "Absent",
+  },
+  {
+    id: "6",
+    name: "Bikal Maharjan",
+    studentId: "23186538",
+    time: "07:10 AM",
+    status: "Present",
+  },
+];
+
 export const calculateAttendanceStats = (studentId, courseId) => {
   let records = mockAttendanceRecords.filter(
     (record) => record.studentId === studentId

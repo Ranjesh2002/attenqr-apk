@@ -28,13 +28,12 @@ export default function Notification() {
   };
 
   const getNotification = (type) => {
-    switch (type) {
-      case "warning":
-        return <AlertTriangle size={24} color={Colors.light.warning} />;
-      case "success":
-        return <CheckCircle size={24} color={Colors.light.success} />;
-      default:
-        return <Info size={24} color={Colors.light.primary} />;
+    if ("warning") {
+      return <AlertTriangle size={24} color={Colors.light.warning} />;
+    } else if ("success") {
+      return <CheckCircle size={24} color={Colors.light.success} />;
+    } else {
+      return <Info size={24} color={Colors.light.primary} />;
     }
   };
 

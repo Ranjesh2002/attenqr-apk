@@ -1,55 +1,16 @@
-import { Button } from "@/components/ui/button";
+import { useRouter } from "expo-router";
+import { History } from "lucide-react-native";
+import React from "react";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { Button } from "../../components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { useRouter } from "expo-router";
-import { History } from "lucide-react";
-import React from "react";
-import { ScrollView, Text, View } from "react-native";
-
-const mockClassesData = {
-  recentSessions: [
-    {
-      id: 1,
-      course: "Server System",
-      date: "2025-06-01",
-      attendees: 20,
-      total: 23,
-    },
-    {
-      id: 2,
-      course: "Database",
-      date: "2025-06-02",
-      attendees: 21,
-      total: 23,
-    },
-    {
-      id: 3,
-      course: "It Infrastructure",
-      date: "2025-05-03",
-      attendees: 22,
-      total: 23,
-    },
-    {
-      id: 4,
-      course: "Server System",
-      date: "2025-05-7",
-      attendees: 19,
-      total: 23,
-    },
-    {
-      id: 5,
-      course: "Database",
-      date: "2025-05-8",
-      attendees: 23,
-      total: 23,
-    },
-  ],
-};
+} from "../../components/ui/card";
+import { mockClassesData } from "../../utils/mockData";
 
 const HistoryPage = () => {
   const router = useRouter();
@@ -65,27 +26,11 @@ const HistoryPage = () => {
         </CardHeader>
         <CardContent>
           {mockClassesData.recentSessions.map((session) => (
-            <View
-              key={session.id}
-              style={{
-                borderRadius: 8,
-                borderWidth: 1,
-                borderColor: "#ccc",
-                padding: 12,
-                marginBottom: 10,
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "space-between",
-              }}
-            >
-              <View style={{ flex: 1 }}>
-                <Text style={{ fontWeight: "bold", fontSize: 16 }}>
-                  {session.course}
-                </Text>
-                <Text style={{ fontSize: 14, color: "#888" }}>
-                  {session.date}
-                </Text>
-                <Text style={{ fontSize: 12, color: "#888" }}>
+            <View key={session.id} style={styles.sessionRow}>
+              <View style={styles.sessionInfo}>
+                <Text style={styles.courseText}>{session.course}</Text>
+                <Text style={styles.dateText}>{session.date}</Text>
+                <Text style={styles.attendanceText}>
                   Attendance: {session.attendees}/{session.total} (
                   {Math.round((session.attendees / session.total) * 100)}%)
                 </Text>
@@ -93,13 +38,9 @@ const HistoryPage = () => {
               <Button
                 variant="outline"
                 onPress={() => router.push(`/attendance?session=${session.id}`)}
-                style={{
-                  marginleft: 12,
-                  flexDirection: "row",
-                  alignItems: "center",
-                }}
+                style={styles.detailsButton}
               >
-                <History size={16} style={{ marginRight: 8 }} />
+                <History size={16} style={styles.historyIcon} />
                 <Text>Details</Text>
               </Button>
             </View>
@@ -109,5 +50,41 @@ const HistoryPage = () => {
     </ScrollView>
   );
 };
+
+const styles = StyleSheet.create({
+  sessionRow: {
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: "#ccc",
+    padding: 12,
+    marginBottom: 10,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  sessionInfo: {
+    flex: 1,
+  },
+  courseText: {
+    fontWeight: "bold",
+    fontSize: 16,
+  },
+  dateText: {
+    fontSize: 14,
+    color: "#888",
+  },
+  attendanceText: {
+    fontSize: 12,
+    color: "#888",
+  },
+  detailsButton: {
+    marginLeft: 12,
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  historyIcon: {
+    marginRight: 8,
+  },
+});
 
 export default HistoryPage;

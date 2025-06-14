@@ -1,7 +1,6 @@
 import { colors, fontSizes, shadows, spacing } from "@/constants/theme";
 import { Ionicons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import axios from "axios";
 import { CameraView, useCameraPermissions } from "expo-camera";
 import { LinearGradient } from "expo-linear-gradient";
 import React, { useEffect, useState } from "react";
@@ -21,6 +20,7 @@ import Animated, {
   withRepeat,
   withTiming,
 } from "react-native-reanimated";
+import api from "../../utils/api";
 
 export default function StudentHomeScreen() {
   const [scanning, setScanning] = useState(false);
@@ -82,11 +82,18 @@ export default function StudentHomeScreen() {
     setHasScanned(true);
     setScanning(false);
 
+    const token = await AsyncStorage.getItem("accessToken");
     try {
-      const response = await axios.post(
-        "http://127.0.0.1:8000/api/mark-attendance/",
-        { session_id: data },
-        { withCredentials: true }
+      const response = await api.post(
+        "/mark-attendance/",
+        { code: data },
+        {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
 
       if (response.status === 200) {
@@ -254,6 +261,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "rgba(0,0,0,0.3)",
+    position: "absolute",
   },
   scanFrame: {
     width: 250,
