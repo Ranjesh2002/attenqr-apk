@@ -17,10 +17,12 @@ import {
   withTiming,
 } from "react-native-reanimated";
 import { AuthGuard } from "../../components/AuthGaurd";
+import api from "../../utils/api";
 
 export default function TeacherHomeScreen() {
   const router = useRouter();
   const [username, setUsername] = useState("Teacher");
+  const [classSession, setClassSession] = useState(null);
   const pulseAnim = useSharedValue(1);
 
   useEffect(() => {
@@ -39,6 +41,23 @@ export default function TeacherHomeScreen() {
     fetchUserData();
   }, []);
 
+  useEffect(() => {
+    const Class = async () => {
+      try {
+        const res = await api.post("/todays-class/", {
+          withCredentials: true,
+        });
+        setClassSession(res.data);
+      } catch (error) {
+        console.log(
+          "error fetching the session",
+          error.response?.data || error.message
+        );
+      }
+    };
+    Class();
+  });
+
   return (
     <AuthGuard role="teacher">
       <SafeAreaView style={styles.container}>
@@ -52,16 +71,28 @@ export default function TeacherHomeScreen() {
         </View>
 
         <View style={styles.card}>
-          <Text style={styles.cardTitle}>📚 Today: Database Systems</Text>
-          <Text style={styles.cardText}>🕙 Time: 07:00 - 09:00 AM</Text>
-          <Text style={styles.cardText}>👥 Students: 23</Text>
+          {classSession ? (
+            <>
+              <Text style={styles.cardTitle}>
+                📚 Today: {classSession.subject}
+              </Text>
+              <Text style={styles.cardText}>
+                🕙 Time: {classSession.start_time} - {classSession.end_time}
+              </Text>
+              <Text style={styles.cardText}>
+                👥 Students: {classSession.total_students}
+              </Text>
 
-          <TouchableOpacity
-            style={styles.qrButton}
-            onPress={() => router.push("/QR")}
-          >
-            <Text style={styles.qrButtonText}>Generate QR Code</Text>
-          </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.qrButton}
+                onPress={() => router.push("/QR")}
+              >
+                <Text style={styles.qrButtonText}>Generate QR Code</Text>
+              </TouchableOpacity>
+            </>
+          ) : (
+            <Text style={styles.cardText}>No class scheduled for today.</Text>
+          )}
         </View>
       </SafeAreaView>
     </AuthGuard>
