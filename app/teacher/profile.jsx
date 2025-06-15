@@ -1,7 +1,7 @@
 import Colors from "@/constants/Colors";
 import { shadows } from "@/constants/theme";
 import { BookOpen, LogOut, Mail, Settings, User } from "lucide-react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Image,
   SafeAreaView,
@@ -11,9 +11,46 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import api from "../../utils/api";
 import { logout } from "../../utils/auth";
 
 export default function ProfileScreen() {
+  const [classSession, setClassSession] = useState(null);
+  const [profile, setProfile] = useState(null);
+
+  useEffect(() => {
+    const fetchClassSession = async () => {
+      try {
+        const res = await api.post("/todays-class/", {
+          withCredentials: true,
+        });
+        setClassSession(res.data);
+      } catch (error) {
+        console.log(
+          "Error fetching class session:",
+          error.response?.data || error.message
+        );
+      }
+    };
+
+    const fetchProfile = async () => {
+      try {
+        const res = await api.post("/teacher-profile/", {
+          withCredentials: true,
+        });
+        setProfile(res.data);
+      } catch (error) {
+        console.log(
+          "Error fetching profile:",
+          error.response?.data || error.message
+        );
+      }
+    };
+
+    fetchClassSession();
+    fetchProfile();
+  }, []);
+
   const handleLogout = () => {
     logout();
   };
@@ -33,7 +70,9 @@ export default function ProfileScreen() {
             source={require("../../assets/images/profile.png")}
             style={styles.profileImage}
           />
-          <Text style={styles.name}>Ranjesh Thakur</Text>
+          <Text style={styles.name}>
+            {profile ? profile.fullname : "no name"}
+          </Text>
           <Text style={styles.studentId}>786438</Text>
         </View>
 
@@ -48,7 +87,9 @@ export default function ProfileScreen() {
             </View>
             <View style={styles.infoContent}>
               <Text style={styles.infoLabel}>Full Name</Text>
-              <Text style={styles.infoValue}>Ranjesh Thakur</Text>
+              <Text style={styles.infoValue}>
+                {profile ? profile.fullname : "no name"}
+              </Text>
             </View>
           </View>
 
@@ -60,7 +101,9 @@ export default function ProfileScreen() {
             </View>
             <View style={styles.infoContent}>
               <Text style={styles.infoLabel}>Email Address</Text>
-              <Text style={styles.infoValue}>ranjesh@mail.com</Text>
+              <Text style={styles.infoValue}>
+                {profile ? profile.email : "no email"}
+              </Text>
             </View>
           </View>
 
@@ -72,7 +115,9 @@ export default function ProfileScreen() {
             </View>
             <View style={styles.infoContent}>
               <Text style={styles.infoLabel}>Course</Text>
-              <Text style={styles.infoValue}>It Infrastructure</Text>
+              <Text style={styles.infoValue}>
+                {classSession ? classSession.subject : "No subject"}
+              </Text>
             </View>
           </View>
         </View>
