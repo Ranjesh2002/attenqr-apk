@@ -3,6 +3,7 @@ import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import {
   ActivityIndicator,
+  Alert,
   StyleSheet,
   Text,
   TextInput,
@@ -13,7 +14,7 @@ import api from "../utils/api";
 
 export default function Login() {
   const router = useRouter();
-  const [role, setRole] = useState("student");
+  const [role, setRole] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -34,6 +35,12 @@ export default function Login() {
 
       if (response.status === 200) {
         const { user, tokens } = response.data;
+        if (user.role !== role) {
+          Alert.alert("selected role does not match the user role");
+          alert("selected role does not match the user role");
+          setIsLoading(false);
+          return;
+        }
         await AsyncStorage.multiSet([
           ["user", JSON.stringify(user)],
           ["accessToken", tokens.access],

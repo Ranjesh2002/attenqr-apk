@@ -21,6 +21,8 @@ export default function Register() {
   const [role, setRole] = useState("student");
   const [studentId, setStudentId] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [department, setDepartment] = useState("");
+  const [year, setYear] = useState("");
 
   const handleRegister = async () => {
     if (!name || !email || !password || !confirmPassword) {
@@ -33,8 +35,8 @@ export default function Register() {
       return;
     }
 
-    if (role === "student" && !studentId) {
-      Alert.alert("Error", "Student ID is required");
+    if (role === "student" && (!studentId || !department || !year)) {
+      Alert.alert("Error", "All student field is required");
       return;
     }
 
@@ -48,6 +50,8 @@ export default function Register() {
         confirmPassword,
         role,
         studentId,
+        department,
+        year,
       });
 
       Alert.alert("success", response.data.message);
@@ -100,12 +104,26 @@ export default function Register() {
       </View>
 
       {role === "student" && (
-        <TextInput
-          style={styles.input}
-          placeholder="Student ID"
-          value={studentId}
-          onChangeText={setStudentId}
-        />
+        <>
+          <TextInput
+            style={styles.input}
+            placeholder="Student ID"
+            value={studentId}
+            onChangeText={setStudentId}
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Department"
+            value={department}
+            onChangeText={setDepartment}
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Year"
+            value={year}
+            onChangeText={setYear}
+          />
+        </>
       )}
 
       <TextInput

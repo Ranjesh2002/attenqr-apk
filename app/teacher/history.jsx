@@ -1,6 +1,6 @@
 import { useRouter } from "expo-router";
 import { History } from "lucide-react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { Button } from "../../components/ui/button";
 import {
@@ -10,10 +10,29 @@ import {
   CardHeader,
   CardTitle,
 } from "../../components/ui/card";
-import { mockClassesData } from "../../utils/mockData";
+import api from "../../utils/api";
 
 const HistoryPage = () => {
+  const [classSession, setClassSession] = useState([]);
+
   const router = useRouter();
+
+  useEffect(() => {
+    const fetchSession = async () => {
+      try {
+        const res = await api.get("/teacher-history/", {
+          withCredentials: true,
+        });
+        setClassSession(res.data);
+      } catch (error) {
+        console.log(
+          "error fetching the session",
+          error.response?.data || error.message
+        );
+      }
+    };
+    fetchSession();
+  }, []);
 
   return (
     <ScrollView>
@@ -25,26 +44,29 @@ const HistoryPage = () => {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          {mockClassesData.recentSessions.map((session) => (
-            <View key={session.id} style={styles.sessionRow}>
-              <View style={styles.sessionInfo}>
-                <Text style={styles.courseText}>{session.course}</Text>
-                <Text style={styles.dateText}>{session.date}</Text>
-                <Text style={styles.attendanceText}>
-                  Attendance: {session.attendees}/{session.total} (
-                  {Math.round((session.attendees / session.total) * 100)}%)
-                </Text>
+          {classSession &&
+            classSession.map((session) => (
+              <View key={session.id} style={styles.sessionRow}>
+                <View style={styles.sessionInfo}>
+                  <Text style={styles.courseText}>{session.subject}</Text>
+                  <Text style={styles.dateText}>{session.date}</Text>
+                  <Text style={styles.attendanceText}>
+                    Attendance: {session.attendees}/{session.total} (
+                    {session.percentage}%)
+                  </Text>
+                </View>
+                <Button
+                  variant="outline"
+                  onPress={() =>
+                    router.push(`/attendance?session=${session.id}`)
+                  }
+                  style={styles.detailsButton}
+                >
+                  <History size={16} style={styles.historyIcon} />
+                  <Text>Details</Text>
+                </Button>
               </View>
-              <Button
-                variant="outline"
-                onPress={() => router.push(`/attendance?session=${session.id}`)}
-                style={styles.detailsButton}
-              >
-                <History size={16} style={styles.historyIcon} />
-                <Text>Details</Text>
-              </Button>
-            </View>
-          ))}
+            ))}
         </CardContent>
       </Card>
     </ScrollView>
