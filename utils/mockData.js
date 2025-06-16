@@ -100,7 +100,7 @@ export const mockClassesData = {
       id: 1,
       course: "Server System",
       date: "2025-06-01",
-      attendees: 20,
+      attendees: 18,
       total: 23,
     },
     {
@@ -115,20 +115,6 @@ export const mockClassesData = {
       course: "It Infrastructure",
       date: "2025-05-03",
       attendees: 22,
-      total: 23,
-    },
-    {
-      id: 4,
-      course: "Server System",
-      date: "2025-05-7",
-      attendees: 19,
-      total: 23,
-    },
-    {
-      id: 5,
-      course: "Database",
-      date: "2025-05-8",
-      attendees: 23,
       total: 23,
     },
   ],
@@ -155,27 +141,6 @@ export const attendanceData = [
     studentId: "23186533",
     time: "07:20 AM",
     status: "Absent",
-  },
-  {
-    id: "4",
-    name: "Aadarsha Sunam",
-    studentId: "23186535",
-    time: "07:20 AM",
-    status: "Present",
-  },
-  {
-    id: "5",
-    name: "Niraj Chaudhary",
-    studentId: "23186543",
-    time: "07:05 AM",
-    status: "Absent",
-  },
-  {
-    id: "6",
-    name: "Bikal Maharjan",
-    studentId: "23186538",
-    time: "07:10 AM",
-    status: "Present",
   },
 ];
 

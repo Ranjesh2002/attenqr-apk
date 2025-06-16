@@ -6,7 +6,7 @@ import {
   Flame,
   LogOut,
 } from "lucide-react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Image,
   Platform,
@@ -17,12 +17,32 @@ import {
   View,
 } from "react-native";
 import Animated, { FadeInDown } from "react-native-reanimated";
+import api from "../../utils/api";
 import { logout } from "../../utils/auth";
 
 export default function ProfileScreen() {
+  const [profile, setProfile] = useState(null);
+
   const handleLogout = () => {
     logout();
   };
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const res = await api.post("/student-profile/", {
+          withCredentials: true,
+        });
+        setProfile(res.data);
+      } catch (error) {
+        console.log(
+          "Error fetching profile:",
+          error.response?.data || error.message
+        );
+      }
+    };
+    fetchProfile();
+  });
 
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
@@ -37,8 +57,10 @@ export default function ProfileScreen() {
           </TouchableOpacity>
         </View>
 
-        <Text style={styles.name}>Ranjesh Thakur</Text>
-        <Text style={styles.studentId}>ID: 23186532</Text>
+        <Text style={styles.name}>
+          {profile ? profile.fullname : "no name"}
+        </Text>
+        <Text style={styles.studentId}>{profile ? profile.id : "no id"}</Text>
       </View>
 
       <Animated.View
@@ -47,17 +69,23 @@ export default function ProfileScreen() {
       >
         <View style={styles.infoRow}>
           <Text style={styles.infoLabel}>Email</Text>
-          <Text style={styles.infoValue}>ranjesh.thakur@mail.com</Text>
+          <Text style={styles.infoValue}>
+            {profile ? profile.email : "no email"}
+          </Text>
         </View>
 
         <View style={styles.infoRow}>
           <Text style={styles.infoLabel}>Department</Text>
-          <Text style={styles.infoValue}>BScCIT</Text>
+          <Text style={styles.infoValue}>
+            {profile ? profile.department : "no department"}
+          </Text>
         </View>
 
         <View style={styles.infoRow}>
           <Text style={styles.infoLabel}>Year</Text>
-          <Text style={styles.infoValue}>3th Year</Text>
+          <Text style={styles.infoValue}>
+            {profile ? profile.year : "no year"}
+          </Text>
         </View>
       </Animated.View>
 
