@@ -35,15 +35,17 @@ export default function StudentHomeScreen() {
   });
 
   useEffect(() => {
-    const fetchUserData = async () => {
-      const userString = await AsyncStorage.getItem("user");
-      if (userString) {
-        const user = JSON.parse(userString);
-        setUsername(user.first_name);
+    const fetchProfile = async () => {
+      try {
+        const res = await api.post("/student-profile/", {
+          withCredentials: true,
+        });
+        setUsername(res.data);
+      } catch (error) {
+        console.log("Error fetching profile:", error);
       }
     };
-
-    fetchUserData();
+    fetchProfile();
   }, []);
 
   const animatedStyle = useAnimatedStyle(() => {
@@ -113,7 +115,9 @@ export default function StudentHomeScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.greeting}>Hello, {username}</Text>
+        <Text style={styles.greeting}>
+          Hello, {username ? username.fullname : "no name"}
+        </Text>
         <Text style={styles.subtitle}>
           Mark your attendance by scanning a QR code
         </Text>

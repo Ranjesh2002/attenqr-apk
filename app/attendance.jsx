@@ -1,21 +1,41 @@
-import React from "react";
+import { useLocalSearchParams } from "expo-router";
+import React, { useEffect, useState } from "react";
 import { FlatList, StyleSheet, Text, View } from "react-native";
-import { attendanceData } from "../utils/mockData";
+import api from "../utils/api";
 
 export default function AttendanceRecord() {
+  const [student, setStudent] = useState([]);
+  const { sessionId } = useLocalSearchParams();
+
+  useEffect(() => {
+    const fetchStu = async () => {
+      try {
+        const res = await api.get(`/teacher-atten/${sessionId}/`, {
+          withCredentials: true,
+        });
+        setStudent(res.data.students_present);
+      } catch (error) {
+        console.log("error loading students", error);
+      }
+    };
+    fetchStu();
+  }, [sessionId]);
+
   const renderItem = ({ item }) => (
     <View style={styles.row}>
       <Text style={styles.cell}>{item.name}</Text>
-      <Text style={styles.cell}>{item.studentId}</Text>
-      <Text style={styles.cell}>{item.time}</Text>
-      <Text
-        style={[
-          styles.cell,
-          styles.status,
-          { color: item.status === "Present" ? "green" : "red" },
-        ]}
-      >
-        {item.status}
+      <Text style={styles.cell}>{item.id}</Text>
+      <Text style={styles.cell}>
+        {new Date(item.marked_at).toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: true,
+          timeZone: "Asia/Kathmandu",
+        })}
+      </Text>
+
+      <Text style={[styles.cell, styles.status, { color: "green" }]}>
+        Present
       </Text>
     </View>
   );
@@ -30,9 +50,9 @@ export default function AttendanceRecord() {
         <Text style={styles.headerCell}>Status</Text>
       </View>
       <FlatList
-        data={attendanceData}
+        data={student}
         renderItem={renderItem}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.id.toString()}
       />
     </View>
   );

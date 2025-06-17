@@ -94,76 +94,76 @@ export const MOCK_ATTENDANCE = [
   },
 ];
 
-export const mockClassesData = {
-  recentSessions: [
-    {
-      id: 1,
-      course: "Server System",
-      date: "2025-06-01",
-      attendees: 18,
-      total: 23,
-    },
-    {
-      id: 2,
-      course: "Database",
-      date: "2025-06-02",
-      attendees: 21,
-      total: 23,
-    },
-    {
-      id: 3,
-      course: "It Infrastructure",
-      date: "2025-05-03",
-      attendees: 22,
-      total: 23,
-    },
-  ],
-};
+// export const mockClassesData = {
+//   recentSessions: [
+//     {
+//       id: 1,
+//       course: "Server System",
+//       date: "2025-06-01",
+//       attendees: 18,
+//       total: 23,
+//     },
+//     {
+//       id: 2,
+//       course: "Database",
+//       date: "2025-06-02",
+//       attendees: 21,
+//       total: 23,
+//     },
+//     {
+//       id: 3,
+//       course: "It Infrastructure",
+//       date: "2025-05-03",
+//       attendees: 22,
+//       total: 23,
+//     },
+//   ],
+// };
 
-export const attendanceData = [
-  {
-    id: "1",
-    name: "Ranjesh Thakur",
-    studentId: "23186532",
-    time: "07:15 AM",
-    status: "Present",
-  },
-  {
-    id: "2",
-    name: "Sumit Ray",
-    studentId: "23186542",
-    time: "07:10 AM",
-    status: "Present",
-  },
-  {
-    id: "3",
-    name: "Ratik Bajracharya",
-    studentId: "23186533",
-    time: "07:20 AM",
-    status: "Absent",
-  },
-];
+// export const attendanceData = [
+//   {
+//     id: "1",
+//     name: "Ranjesh Thakur",
+//     studentId: "23186532",
+//     time: "07:15 AM",
+//     status: "Present",
+//   },
+//   {
+//     id: "2",
+//     name: "Sumit Ray",
+//     studentId: "23186542",
+//     time: "07:10 AM",
+//     status: "Present",
+//   },
+//   {
+//     id: "3",
+//     name: "Ratik Bajracharya",
+//     studentId: "23186533",
+//     time: "07:20 AM",
+//     status: "Absent",
+//   },
+// ];
 
-export const calculateAttendanceStats = (studentId, courseId) => {
-  let records = mockAttendanceRecords.filter(
-    (record) => record.studentId === studentId
-  );
+// export const calculateAttendanceStats = (studentId, courseId) => {
+//   let records = mockAttendanceRecords.filter(
+//     (record) => record.studentId === studentId
+//   );
 
-  if (courseId) {
-    records = records.filter((record) => record.courseId === courseId);
-  }
+//   if (courseId) {
+//     records = records.filter((record) => record.courseId === courseId);
+//   }
 
-  const totalClasses = records.length;
-  const present = records.filter(
-    (record) => record.status === "present"
-  ).length;
-  const absent = totalClasses - present;
-  const percentage = totalClasses > 0 ? (present / totalClasses) * 100 : 0;
+//   const totalClasses = records.length;
+//   const present = records.filter(
+//     (record) => record.status === "present"
+//   ).length;
+//   const absent = totalClasses - present;
+//   const percentage = totalClasses > 0 ? (present / totalClasses) * 100 : 0;
 
-  return {
-    totalClasses,
-    present,
-    absent,
-    percentage: Math.round(percentage),
-  };
-};
+//   return {
+//     totalClasses,
+//     present,
+//     absent,
+//     percentage: Math.round(percentage),
+//   };
+// };
