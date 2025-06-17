@@ -1,5 +1,4 @@
 import { colors, fontSizes, shadows, spacing } from "@/constants/theme";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useState } from "react";
@@ -21,25 +20,13 @@ import api from "../../utils/api";
 
 export default function TeacherHomeScreen() {
   const router = useRouter();
-  const [username, setUsername] = useState("Teacher");
+  const [username, setUsername] = useState(null);
   const [classSession, setClassSession] = useState(null);
   const pulseAnim = useSharedValue(1);
 
   useEffect(() => {
     pulseAnim.value = withRepeat(withTiming(1.2, { duration: 2000 }), -1, true);
   });
-
-  useEffect(() => {
-    const fetchUserData = async () => {
-      const userString = await AsyncStorage.getItem("user");
-      if (userString) {
-        const user = JSON.parse(userString);
-        setUsername(user.first_name || "Teacher");
-      }
-    };
-
-    fetchUserData();
-  }, []);
 
   useEffect(() => {
     const Class = async () => {
@@ -49,13 +36,22 @@ export default function TeacherHomeScreen() {
         });
         setClassSession(res.data);
       } catch (error) {
-        console.log(
-          "error fetching the session",
-          error.response?.data || error.message
-        );
+        console.log("error fetching the session", error);
+      }
+    };
+
+    const fetchProfile = async () => {
+      try {
+        const res = await api.post("/teacher-profile/", {
+          withCredentials: true,
+        });
+        setUsername(res.data);
+      } catch (error) {
+        console.log("Error fetching profile:", error);
       }
     };
     Class();
+    fetchProfile();
   }, []);
 
   return (
@@ -64,7 +60,9 @@ export default function TeacherHomeScreen() {
         <StatusBar style="dark" />
 
         <View style={styles.header}>
-          <Text style={styles.greeting}>Hello, {username} 👋</Text>
+          <Text style={styles.greeting}>
+            Hello, {username ? username.fullname : "no name"} 👋
+          </Text>
           <Text style={styles.subtitle}>
             Generate QR Code to mark attendance
           </Text>

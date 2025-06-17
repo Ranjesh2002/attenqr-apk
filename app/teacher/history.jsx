@@ -58,7 +58,7 @@ const HistoryPage = () => {
                 <Button
                   variant="outline"
                   onPress={() =>
-                    router.push(`/attendance?session=${session.id}`)
+                    router.push(`/attendance?sessionId=${session.id}`)
                   }
                   style={styles.detailsButton}
                 >
