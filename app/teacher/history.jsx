@@ -20,7 +20,7 @@ const HistoryPage = () => {
   useEffect(() => {
     const fetchSession = async () => {
       try {
-        const res = await api.get("/teacher-history/", {
+        const res = await api.get("/attendance-history/", {
           withCredentials: true,
         });
         setClassSession(res.data);

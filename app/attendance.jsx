@@ -10,10 +10,10 @@ export default function AttendanceRecord() {
   useEffect(() => {
     const fetchStu = async () => {
       try {
-        const res = await api.get(`/teacher-atten/${sessionId}/`, {
+        const res = await api.get(`/student-atten/${sessionId}/`, {
           withCredentials: true,
         });
-        setStudent(res.data.students_present);
+        setStudent(res.data.present);
       } catch (error) {
         console.log("error loading students", error);
       }
@@ -26,7 +26,7 @@ export default function AttendanceRecord() {
       <Text style={styles.cell}>{item.name}</Text>
       <Text style={styles.cell}>{item.id}</Text>
       <Text style={styles.cell}>
-        {new Date(item.marked_at).toLocaleTimeString([], {
+        {new Date(item.time).toLocaleTimeString([], {
           hour: "2-digit",
           minute: "2-digit",
           hour12: true,
