@@ -13,7 +13,7 @@ export default function AttendanceRecord() {
         const res = await api.get(`/student-atten/${sessionId}/`, {
           withCredentials: true,
         });
-        setStudent(res.data.present);
+        setStudent(res.data.students);
       } catch (error) {
         console.log("error loading students", error);
       }
@@ -34,8 +34,14 @@ export default function AttendanceRecord() {
         })}
       </Text>
 
-      <Text style={[styles.cell, styles.status, { color: "green" }]}>
-        Present
+      <Text
+        style={[
+          styles.cell,
+          styles.status,
+          { color: item.status === "Present" ? "green" : "red" },
+        ]}
+      >
+        {item.status}
       </Text>
     </View>
   );
