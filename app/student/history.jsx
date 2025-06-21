@@ -1,5 +1,4 @@
 import { colors, fontSizes, shadows, spacing } from "@/constants/theme";
-import { MOCK_ATTENDANCE } from "@/utils/mockData";
 import { format } from "date-fns";
 import {
   Calendar,
@@ -7,7 +6,7 @@ import {
   Filter,
   Circle as XCircle,
 } from "lucide-react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   FlatList,
   Platform,
@@ -17,11 +16,27 @@ import {
   View,
 } from "react-native";
 import Animated, { FadeInRight } from "react-native-reanimated";
+import api from "../../utils/api";
 
 export default function HistoryScreen() {
   const [filter, setFilter] = useState("all");
+  const [attendance, setAttendance] = useState([]);
 
-  const filteredData = MOCK_ATTENDANCE.filter((item) => {
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await api.get("/student-attendance/", {
+          withCredentials: true,
+        });
+        setAttendance(res.data.attendance_history);
+      } catch (error) {
+        console.log("failed to fetch attendance", error);
+      }
+    };
+    fetchData();
+  }, []);
+
+  const filteredData = attendance.filter((item) => {
     if (filter === "all") return true;
     return item.status === filter;
   });
